@@ -3,6 +3,9 @@ import os
 from text_share.settings import *
 from decouple import config
 
+# For Deployment
+DEBUG = False
+
 SECRET_KEY = config('SECRET_KEY')
 
 # This is allowing our deployment host
