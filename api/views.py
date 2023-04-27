@@ -1,8 +1,8 @@
 
 # Django Rest Framework
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.exceptions import NotFound, ValidationError
 
 # Model
 from .models import TextSnippet
@@ -27,34 +27,31 @@ def create_text_snippet(request):
         text_snippet = TextSnippet.objects.create(content=data['content'], url=generate_unique_url())
         serializer = TextSnippetSerializer(text_snippet, many=False)
         return Response(serializer.data)
-    except Exception as e:
-        raise ValidationError(str(e))
-
+    except:
+        return Response({'message': 'An error occurred while creating the text snippet.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Generating Random String
 def generate_unique_url():
     return str(uuid.uuid4())
 
 
-# Updating the text and saving it into database
+# Edit the text
 @api_view(['PUT'])
 def update_text_snippet(request, url):
     try:
         data = request.data
         text_snippet = TextSnippet.objects.get(url=url)
         serializer = TextSnippetSerializer(instance=text_snippet, data=data)
-
         if serializer.is_valid():
             serializer.save()
-
         return Response(serializer.data)
     except TextSnippet.DoesNotExist:
-        raise NotFound('Text Snippet not found')
-    except Exception as e:
-        raise ValidationError(str(e))
+        return Response({'message': 'The specified text snippet does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response({'message': 'An error occurred while updating the text snippet.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Geting the text from database
+# Get the Text
 @api_view(['GET'])
 def retrieve_text_snippet(request, url):
     try:
@@ -62,7 +59,8 @@ def retrieve_text_snippet(request, url):
         serializer = TextSnippetSerializer(text_snippet, many=False)
         return Response(serializer.data)
     except TextSnippet.DoesNotExist:
-        raise NotFound('Text Snippet not found')
-    except Exception as e:
-        raise ValidationError(str(e))
+        return Response({'message': 'The specified text snippet does not exist.'}, status=status.HTTP_404_NOT_FOUND)
+    except:
+        return Response({'message': 'An error occurred while retrieving the text snippet.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
