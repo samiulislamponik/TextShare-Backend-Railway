@@ -35,13 +35,15 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages',    
     'django.contrib.staticfiles',
 
     # Connecting the api app & other libraries
     'api.apps.ApiConfig',
     'rest_framework',
     'corsheaders',
+    'whitenoise.runserver_nostatic', # WhiteNoise: For admin page css
+
 ]
 
 MIDDLEWARE = [
@@ -56,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # WhiteNoise
 ]
 
 ROOT_URLCONF = 'text_share.urls'
