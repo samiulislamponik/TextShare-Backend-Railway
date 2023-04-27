@@ -5,6 +5,8 @@ SECRET_KEY = config('SECRET_KEY')
 
 ALLOWED_HOSTS = ['web-production-a568.up.railway.app']
 
+CSRF_TRUSTED_ORIGINS = ['https://web-production-a568.up.railway.app']
+
 DATABASES = {
     'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
