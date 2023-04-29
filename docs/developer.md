@@ -1,4 +1,7 @@
-![book](../markdown_icons/book.png)
+
+<p align="center">
+  <img src="../markdown_icons/book.png" alt="Image" width="200" height="200">
+</p>
 
 <h1 align="center">DEVELOPER GUIDE</h1>
 
